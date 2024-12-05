@@ -20,6 +20,10 @@ const city = document.querySelector('.city');
 const temp = document.querySelector('.temp');
 const icon = document.querySelector('.icon');
 
+const weatherDesc=document.getElementById("desc");
+const windSpeed=document.getElementById("wind");
+const feelsLike=document.getElementById("feels");
+
 // Using fetch to get data
 fetch(url)
 .then( response => response.json() )
@@ -32,22 +36,33 @@ fetch(url)
   const weatherContainer = document.querySelector('.weather');
     
     // Set DOM Elements
-    city.textContent = data.name; 
-    temp.textContent = data.main.temp;
-
-    icon.setAttribute('src', `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`)
+    city.textContent = data.name;
+  weatherDesc.textContent= data.weather[0].description;
+  temp.textContent = data.main.temp+"°F"; ;
+  feelsLike.textContent = data.main.feels_like+"°F";
+  windSpeed.textContent="Wind Speed: "+data.wind.speed+" mph";
+  icon.setAttribute("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`);
   
 });
+
+navigator.geolocation.getCurrentPosition(function(position){
+    const lat=position.coords.latitude;
+    const long=position.coords.longitude;
+  console.log(lat, long);
+})
 </script>
 
 
 <!-- Weather -->
 <section class="weather">
 
-      <h1>Weather</h1>
-      <data class="city">City</data>
-      <data class="temp">Temp</data>
-      <img class="icon" 
-      src="https://via.placeholder.com/150" alt="Placeholder">
+  <div class="avatar pt-6">
+    <img class="ring-blue-500 ring-offset-base-100 w-24 rounded-full ring ring-offset-2" src="" alt="weather">
+    </div>
+    <h3 class="p-3 italic font-semibold" id="desc">desc</h3>
+    <h3 id="temp" class="stat-figure text-blue-300">Temp</h3>
+    <h3 class="p-3" id="wind">wind</h3>
+    Feels like: 
+    <h3 class="stat-figure text-blue-300" id="feels">Feels</h3>
       
 </section>
