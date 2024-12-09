@@ -74,15 +74,98 @@ dayOfMonth.textContent = gotDayOfMonth;
 year.textContent = gotYear;
 // Set the day of the week
 dayOfWeek.textContent = allTheDays[gotDayOfWeek];
+
+
+
+
+// CLOCK STUFF
+
+
+
+
+
+/************
+Dynamic Data
+************/
+// define `theClockApp` stored in function to be ran
+const theClockApp = () => {
+  
+  // Get and store current date and time with `new Date()` object
+  const timeNow = new Date();
+  // Check-Check: See all `Date()` methods and properties
+  // console.log( timeNow );
+  
+  // Get current hours
+  let gotHours = timeNow.getHours();
+  // Get current minutes
+  let gotMinutes = timeNow.getMinutes();
+  // Get current seconds
+  let gotSeconds = timeNow.getSeconds();
+  
+  // Check-Check: Is the data correct? 
+  // console.log(gotHours, gotMinutes, gotSeconds);
+  
+  /************
+  Format Data
+  ************/
+  // Get AM or PM
+  const gotAmOrPM = gotHours >= 12 ? 'PM' : 'AM';
+  // Get 12 hour format
+  gotHours = gotHours % 12 || 12;
+  // Optionally, append zero to single digit hours
+  gotHours = gotHours < 10 ? `0${gotHours}` : gotHours;   
+  // Optionally, append zero to single digit minutes
+  gotMinutes = gotMinutes < 10 ? `0${gotMinutes}` : gotMinutes;
+  // Optionally, append zero to single digit seconds
+  gotSeconds = gotSeconds < 10 ? `0${gotSeconds}` : gotSeconds;
+  
+  /************
+  Get DOM Elements
+  ************/
+  // Get Hours
+  const hours = document.querySelector(".hours");
+  // Get minutes
+  const minutes = document.querySelector(".minutes");
+  // Get seconds
+  const seconds = document.querySelector(".seconds");
+  // Get AM or PM
+  const amOrPM = document.querySelector('.amOrPM');
+  
+  /************
+  Set DOM Elements
+  ************/
+  // Set the hours
+  hours.textContent = gotHours;
+  // Set the minutes
+  minutes.textContent = gotMinutes;
+  // Set the seconds
+  seconds.textContent = gotSeconds;
+  // Set AM or PM
+  amOrPM.textContent = gotAmOrPM;
+    
+  }
+  
+  /************
+  Run App
+  ************/
+  // Re-run `theClockApp` every 1 second (1000 ms)
+  setInterval(theClockApp, 1000);
 </script>
 
 <!-- HTML -->
 <section class="date card glass">
+  <time class="card-body flex flex-row justify-center items-center text-gray-700 text-xl font-semibold">
+    <data class="hours">HH</data> : <data class="minutes">MM</data> :
+    <data class="seconds">SS</data>
+    <data class="amOrPM">AM/PM</data>
+  </time>
     <div class="flex flex-col justify-center items-center stat">
+
+   
 
     <time class="card-body">
       <data class="dayOfWeek hero-content drop-shadow font-bold text-6xl text-yellow-300">SMTWTFS</data>
-      <div class="font-semibold text-yellow-400">
+      <div class="font-semibold text-yellow-400 justify-center items-center">
       <data class="month">Month</data>
       <data class="dayOfMonth">00</data>, <data class="year">0000</data>
       </div>

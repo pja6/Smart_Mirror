@@ -27,21 +27,16 @@ const feelsLike=document.getElementById("feels");
 // Using fetch to get data
 fetch(url)
 .then( response => response.json() )
-.then( data => {
+.then( weatherData => {
 
   // Check-check: Is data good? 
-  console.log( data );
-  
-  // Get Container for Weather   
-  const weatherContainer = document.querySelector('.weather');
-    
-    // Set DOM Elements
-    city.textContent = data.name;
-  weatherDesc.textContent= data.weather[0].description;
-  temp.textContent = data.main.temp+"°F"; ;
-  feelsLike.textContent = data.main.feels_like+"°F";
-  windSpeed.textContent="Wind Speed: "+data.wind.speed+" mph";
-  icon.setAttribute("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`);
+  console.log( weatherData );
+  city.textContent = weatherData.name;
+  weatherDesc.textContent=weatherData.weather[0].description;
+  temp.textContent = weatherData.main.temp+"°F"; ;
+  feelsLike.textContent = weatherData.main.feels_like+"°F";
+  windSpeed.textContent="Wind Speed: "+weatherData.wind.speed+" mph";
+  icon.setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`);
   
 });
 
@@ -55,9 +50,9 @@ navigator.geolocation.getCurrentPosition(function(position){
 
 <!-- Weather -->
  <div class=" card glass">
-<section class="weather card-body">
-
-  <div class="avatar pt-6 weather">
+<section class="weather card-body flex">
+  <div class="avatar pt-6 weather flex flex-col">
+    <h1 class="font-bold text-4xl text-gray-50 drop-shadow">City</h1>
     <img class="ring-blue-500 ring-offset-base-100 w-24 rounded-full ring ring-offset-2" src="" alt="weather">
     </div>
     <h3 class="p-3 italic font-semibold" id="desc">desc</h3>
