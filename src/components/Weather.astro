@@ -16,9 +16,9 @@ const queryUnits = 'imperial';
 const url = `${queryEndpoint}?q=${queryCity}&appid=${APIKEY}&units=${queryUnits}`;
 
 // Get DOM Elements
-const city = document.querySelector('.city');
-const temp = document.querySelector('.temp');
-const icon = document.querySelector('.icon');
+const city = document.querySelector('h1');
+const temp = document.getElementById('temp');
+const icon = document.querySelector('img');
 
 const weatherDesc=document.getElementById("desc");
 const windSpeed=document.getElementById("wind");
@@ -52,7 +52,7 @@ navigator.geolocation.getCurrentPosition(function(position){
  <div class=" card glass">
 <section class="weather card-body flex">
   <div class="avatar pt-6 weather flex flex-col">
-    <h1 class="font-bold text-4xl text-gray-50 drop-shadow">City</h1>
+    <h1 class="font-bold text-4xl text-gray-50 drop-shadow text-center">City</h1>
     <img class="ring-blue-500 ring-offset-base-100 w-24 rounded-full ring ring-offset-2" src="" alt="weather">
     </div>
     <h3 class="p-3 italic font-semibold" id="desc">desc</h3>
