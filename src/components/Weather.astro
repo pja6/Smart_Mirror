@@ -6,14 +6,11 @@
 const APIKEY = import.meta.env.PUBLIC_WEATHER_API;
 
 // API endpoint URL
-const queryEndpoint = 'https://api.openweathermap.org/data/2.5/weather';
-// City
+const forecastEndpoint = 'https://api.openweathermap.org/data/2.5/forecast';
 const queryCity = 'Spokane';
-// Units for Farenheit
 const queryUnits = 'imperial';
+const url = `${forecastEndpoint}?q=${queryCity}&appid=${APIKEY}&units=${queryUnits}`;
 
-// URL query string
-const url = `${queryEndpoint}?q=${queryCity}&appid=${APIKEY}&units=${queryUnits}`;
 
 // Get DOM Elements
 const city = document.querySelector('h1');
@@ -28,38 +25,40 @@ const weatherDetailsContainer = document.getElementById('weather-details-contain
 // Using fetch to get data
 fetch(url)
 .then( response => response.json() )
-.then( weatherData => {
-
-  // Check-check: Is data good? 
-  console.log( weatherData );
-  city.textContent = weatherData.name;
-  weatherDesc.textContent=weatherData.weather[0].description;
-  temp.textContent = weatherData.main.temp+"°F"; ;
-  windSpeed.textContent="Wind Speed: "+weatherData.wind.speed+" mph";
-
-  const feelsLikeValue = weatherData.main.feels_like;
-  const feelsLikeLabel = document.createElement('p');
+.then(forecastData => {
+    // Check if data is valid
+    console.log(forecastData);
+    
+    // Set basic weather data
+    city.textContent = forecastData.city.name;
+    weatherDesc.textContent = forecastData.list[0].weather[0].description;
+    temp.textContent = forecastData.list[0].main.temp + "°F";
+    windSpeed.textContent = "Wind Speed: " + forecastData.list[0].wind.speed + " mph";
+    icon.setAttribute("src", `https://openweathermap.org/img/wn/${forecastData.list[0].weather[0].icon}.png`);
+    
+    // Handle "Feels Like" with Tailwind classes
+    const feelsLikeValue = forecastData.list[0].main.feels_like;
+    const feelsLikeInfo = document.createElement('p');
     const feelsLikeText = document.createTextNode('Feels like: ');
     const feelsLikeValueElement = document.createElement('span');
     feelsLikeValueElement.textContent = `${feelsLikeValue}°F`;
-    feelsLikeValueElement.classList.add("stat-figure", "text-blue-300"); 
-
-    feelsLikeLabel.appendChild(feelsLikeText);
-    feelsLikeLabel.appendChild(feelsLikeValueElement);
-    weatherDetailsContainer.appendChild(feelsLikeLabel);
+    feelsLikeValueElement.classList.add("stat-figure", "text-blue-300"); // Tailwind styling
+    feelsLikeInfo.appendChild(feelsLikeText);
+    feelsLikeInfo.appendChild(feelsLikeValueElement);
+    weatherDetailsContainer.appendChild(feelsLikeInfo);
     
-    icon.setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`);
-  const rain = weatherData.rain ? weatherData.rain['1h'] : 0; // Assuming rain is in mm for the last 1 hour
-    const humidity = weatherData.main.humidity;
+    // Handle precipitation (chance of rain or snow) from forecast
+    const pop = forecastData.list[0].pop * 100; // pop is returned as a value between 0 and 1, so multiply by 100 to get percentage
     const rainInfo = document.createElement('p');
-    rainInfo.innerHTML = `Rain: <data value="${rain}" class="p">${rain} mm</data>`;
+    const rainText = document.createTextNode('Chance of Rain: ');
+    const rainValue = document.createElement('span');
+    rainValue.textContent = `${pop}%`;
+    rainValue.classList.add("text-blue-300", "text-xl"); // Tailwind styling
+    rainInfo.appendChild(rainText);
+    rainInfo.appendChild(rainValue);
 
-    const humidityInfo = document.createElement('p');
-    humidityInfo.innerHTML = `Humidity: <data value="${humidity}" class="p">${humidity}%</data>`;
-
-    // Append the new paragraphs to the document (assumed to be part of an existing container)
+    // Append precipitation info to the container
     weatherDetailsContainer.appendChild(rainInfo);
-    weatherDetailsContainer.appendChild(humidityInfo);
   
 });
 
