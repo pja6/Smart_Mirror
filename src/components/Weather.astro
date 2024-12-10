@@ -23,6 +23,7 @@ const icon = document.querySelector('img');
 const weatherDesc=document.getElementById("desc");
 const windSpeed=document.getElementById("wind");
 const feelsLike=document.getElementById("feels");
+const weatherDetailsContainer = document.getElementById('weather-details-container');
 
 // Using fetch to get data
 fetch(url)
@@ -34,9 +35,31 @@ fetch(url)
   city.textContent = weatherData.name;
   weatherDesc.textContent=weatherData.weather[0].description;
   temp.textContent = weatherData.main.temp+"°F"; ;
-  feelsLike.textContent = weatherData.main.feels_like+"°F";
   windSpeed.textContent="Wind Speed: "+weatherData.wind.speed+" mph";
-  icon.setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`);
+
+  const feelsLikeValue = weatherData.main.feels_like;
+  const feelsLikeLabel = document.createElement('p');
+    const feelsLikeText = document.createTextNode('Feels like: ');
+    const feelsLikeValueElement = document.createElement('span');
+    feelsLikeValueElement.textContent = `${feelsLikeValue}°F`;
+    feelsLikeValueElement.classList.add("stat-figure", "text-blue-300"); 
+
+    feelsLikeLabel.appendChild(feelsLikeText);
+    feelsLikeLabel.appendChild(feelsLikeValueElement);
+    weatherDetailsContainer.appendChild(feelsLikeLabel);
+    
+    icon.setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`);
+  const rain = weatherData.rain ? weatherData.rain['1h'] : 0; // Assuming rain is in mm for the last 1 hour
+    const humidity = weatherData.main.humidity;
+    const rainInfo = document.createElement('p');
+    rainInfo.innerHTML = `Rain: <data value="${rain}" class="p">${rain} mm</data>`;
+
+    const humidityInfo = document.createElement('p');
+    humidityInfo.innerHTML = `Humidity: <data value="${humidity}" class="p">${humidity}%</data>`;
+
+    // Append the new paragraphs to the document (assumed to be part of an existing container)
+    weatherDetailsContainer.appendChild(rainInfo);
+    weatherDetailsContainer.appendChild(humidityInfo);
   
 });
 
@@ -59,7 +82,10 @@ navigator.geolocation.getCurrentPosition(function(position){
     <h3 class="p-3 italic font-semibold text-center" id="desc">desc</h3>
     <h3 id="temp" class="stat-figure text-blue-300 text-xl text-bold">Temp</h3>
     <h3 class="p-3" id="wind">wind</h3>
-    Feels like: <h3 class="stat-figure text-blue-300" id="feels">Feels</h3>
+    <h3 class="stat-figure text-blue-300" id="feels"></h3>
+    <div id="weather-details-container"></div>
+
       </div>
+    
 </section>
 </div>
