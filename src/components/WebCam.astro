@@ -29,10 +29,11 @@ video {
     top: 0;
     left: 0;
     /* Stretch to fill viewport */
-    width: 100vw;
-    height: 100vh;
+   /* width: 100vw;
+    height: 100vh; */
     /* stack behind content     */
     z-index: -1;
+    height: 100%;
     /* fill background with video    */
   object-fit: cover;
   object-position: center;
@@ -42,5 +43,5 @@ video {
 
     <!-- Webcam Video -->
     <div class="card glass">
-    <video class="card-body" autoplay></video>
+    <video class="card body justify-center items-center" autoplay></video>
     </div>
