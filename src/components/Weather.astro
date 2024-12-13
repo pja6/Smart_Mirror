@@ -33,7 +33,17 @@ fetch(url)
     city.textContent = forecastData.city.name;
     weatherDesc.textContent = forecastData.list[0].weather[0].description;
     temp.textContent = forecastData.list[0].main.temp + "°F";
-    windSpeed.textContent = "Wind Speed: " + forecastData.list[0].wind.speed + " mph";
+
+    // Wind Speed
+const windSpeedValue = forecastData.list[0].wind.speed;
+const windSpeed = document.createElement('p');
+const windSpeedText = document.createTextNode('Wind Speed: ');
+const windSpeedValueElement = document.createElement('span');
+windSpeedValueElement.textContent = `${windSpeedValue} mph`;
+windSpeedValueElement.classList.add("stat-figure", "text-blue-300"); // Tailwind styling
+windSpeed.appendChild(windSpeedText);
+windSpeed.appendChild(windSpeedValueElement);
+weatherDetailsContainer.appendChild(windSpeed);
     icon.setAttribute("src", `https://openweathermap.org/img/wn/${forecastData.list[0].weather[0].icon}.png`);
     
     // Handle "Feels Like" with Tailwind classes
@@ -74,15 +84,17 @@ navigator.geolocation.getCurrentPosition(function(position){
  <div class=" card glass">
 <section class="weather card-body flex">
   <div class="weather flex flex-col">
-    <h1 class="font-bold text-4xl text-gray-50 drop-shadow text-center">City</h1>
+    <h1 class="font-bold text-5xl text-gray-50 drop-shadow text-center font-bold italic">City</h1>
     <div class="pt-6 flex justify-center items-center">
-    <img class="ring-blue-500 ring-offset-base-100 w-32 rounded-full ring ring-offset-2" src="" alt="weather">
-    </div>
-    <h3 class="p-3 italic font-semibold text-center" id="desc">desc</h3>
-    <h3 id="temp" class="stat-figure text-blue-300 text-xl text-bold">Temp</h3>
-    <h3 class="p-3" id="wind">wind</h3>
+      <div class="relative inline-block">
+        <img class="rounded-full w-32" src="" alt="weather">
+        <div class="absolute inset-0 border-8 border-blue-500 rounded-full m-1"></div>
+      </div>
+          </div>
+    <h3 class="p-3 italic font-semibold text-l text-uppercase text-center uppercase text-blue-300 pt-4" id="desc">desc</h3>
+    <h3 id="temp" class="stat-figure text-blue-300 text-5xl font-extrabold py-5 ">Temp</h3>
     <h3 class="stat-figure text-blue-300" id="feels"></h3>
-    <div id="weather-details-container"></div>
+    <div id="weather-details-container" class="flex flex-col justify-center items-center"></div>
 
       </div>
     
