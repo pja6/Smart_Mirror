@@ -145,6 +145,27 @@ const theClockApp = () => {
     
   }
   
+
+//BizSpeak of the day
+
+  const bizURL = 'https://corporatebs-generator.sameerkumar.website/';
+
+const bizSpeakOutput = document.getElementById('bizPhrase');
+console.log(bizURL);
+
+bizSpeakOutput.innerText=bizURL;
+fetch(bizURL)
+.then(response => response.json())
+.then( bizSpeak => {
+  //check
+  console.log( bizSpeak );
+  console.log( bizSpeak.phrase );
+  bizSpeakOutput.innerText = bizSpeak.phrase;
+});
+
+
+
+  
   /************
   Run App
   ************/
@@ -168,7 +189,7 @@ const theClockApp = () => {
     </time>
     </div>
 
-    <time class="card-body text-opacity-90 drop-shadow flex flex-row justify-center items-center text-white text-xl font-extrabold px-8 pb-40">
+    <time class="card-body text-opacity-90 drop-shadow flex flex-row justify-center items-center text-white text-xl font-extrabold px-8 pb-20">
       <div class="text-4xl oldstyle-nums slashed-zero">
       <data class="hours">HH</data> : <data class="minutes countdown">MM</data> :
       <data class="seconds slashed-zero">SS</data>
@@ -176,4 +197,12 @@ const theClockApp = () => {
     </div>
    
     </time>
+
+
+    <!-- biz speak --> 
+
+    <div class="flex flex-col justify-center items-center pb-16 px-7">
+      <h3 class="text-2xl font-light text-opacity-98 drop-shadow text-indigo-600 uppercase text-center ">Corporate Jargon of the day:</h3>
+      <h4 class="px-12 pt-5 overflow-ellipsis text-center font-normal text-lg text-opacity-90 text-white italic " id="bizPhrase">Trailblazers</h4>
+  </div>
   </section>
