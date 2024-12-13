@@ -32,7 +32,19 @@ fetch(url)
     // Set basic weather data
     city.textContent = forecastData.city.name;
     weatherDesc.textContent = forecastData.list[0].weather[0].description;
-    temp.textContent = forecastData.list[0].main.temp + "°F";
+    // Get the temperature value
+const tempValue = forecastData.list[0].main.temp;
+
+// Create a span element for the °F symbol
+const degreeSymbol = document.createElement('span');
+degreeSymbol.textContent = '°F';
+degreeSymbol.classList.add('text-xl'); // Add Tailwind's class for smaller text
+
+// Set the temperature value as text content of the main element
+temp.textContent = tempValue;
+
+// Append the degree symbol to the temp element
+temp.appendChild(degreeSymbol);
 
     // Wind Speed
 const windSpeedValue = forecastData.list[0].wind.speed;
