@@ -2,8 +2,11 @@
 
 This is my submission for the Smart Mirror project. 
 
-I've used the Astro/Tailwind/DaisyUI template and migrated the basic content from my
+I've used the [Astro/Tailwind/DaisyUI Smart Mirror template](https://github.com/ewuweblab/astro-tailwind-daisyui-clock-date-weather-webcam) and migrated the basic content from my
 initial NFC Dashboard attempt.
+
+I also used the [Corporate Buzz Words API](https://github.com/sameerkumar18/corporate-bs-generator-api?ref=public_apis&utm_medium=website)
+
 
 I modified the styling and envisioned this as more of a compact/handheld mirror rather than
 a wall mounted mirror - so the background reflects the city used for the weather card.
